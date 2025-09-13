@@ -9,24 +9,24 @@
     """
 
 #user input ints
-num_int =  int(input("Enter integer 1: "))
-num_int2 = int(input("Enter integer 2: "))
+num =  int(input("Enter integer 1: "))
+num2 = int(input("Enter integer 2: "))
 
 #user input floats 
-num_float =  float(input("Enter float 1: "))
-num_float2 = float(input("Enter float 2: "))
-num_float3 = float(input("Enter float 3: "))
+numf =  float(input("Enter float 1: "))
+numf2 = float(input("Enter float 2: "))
+numf3 = float(input("Enter float 3: "))
 
 #sum of the 2 intgers 
-sum = num_int + num_int2
+sum = num + num2
 
 #product of the 3 floats 
-sum2 = num_float * num_float2 * num_float3
+sum2 = numf * numf2 * numf3
 
 #display of the prompts 
 print(
-    f"The sum of the integers {num_int} and {num_int2} is {sum}"
-    f"\nThe product the floats {num_float}, {num_float2} and {num_float3} is  {sum2}" 
+    f"The sum of the integers {num} and {num2} is {sum}"
+    f"\nThe product the floats {numf}, {numf2} and {numf3} is  {sum2}" 
 )
 
 
