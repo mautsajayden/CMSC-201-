@@ -39,4 +39,4 @@ word = "".join(parts)
 word = word.lower()
 
 for i in range(len(word)):
-    print(i, word[i])
+    print(word[i], sep=", ")
