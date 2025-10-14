@@ -1,32 +1,49 @@
+"""
+    File : checkerboard.py
+    Author : Jayden Mautsa 
+    Date : 10/10/2025
+    Section : Homework 5
+    E-mail : jmautsa1@umbc.edu
+    Description : the checkerBoard
+    """
+
 def checkerboard(size, symbol_1, symbol_2):
+    var1_2 = symbol_1 + symbol_2
     
-    s = symbol_1 + symbol_2
-    for i in range(1,size):
-        if(len(s) < size):
-            if(s[i] != symbol_1):
-                s+= symbol_1
-            elif(s[i] != symbol_2):
-                s+= symbol_2
-        
-        if(len(s) == size):
+    #makes the original of the symbol "ababa"
+    for i in range((size-(len(var1_2)))):
+        if not(i == (size-(len(var1_2)))):
+            var1_2 += var1_2[i]
+        else : 
             break
-   
     
-    return s
+    var2_1 = symbol_2 + symbol_1
+    
+    #makes the reverse of the symbols  'babab'
+    for i in range((size-(len(var2_1)))):
+        if not(i == (size-(len(var2_1)))):
+            var2_1 += var2_1[i]
+        else : 
+            break
+        
+    #print the reverse and correct word of the symbols 
+    for i in range(size):
+        if i % 2 == 0:
+            print(var1_2[:size])
+        else:
+            print(var2_1[:size])
 
-n =int(input("What size do you want? "))
-v = input("What symbols do you want? ")
-n1 = v[0]
-n2 = v[2]
+def main():
+    
+    numSize =int(input("What size do you want? "))
+    varSymbols = input("What symbols do you want? ")
+    
+    symbol1 = varSymbols[0]
+    symbol2 = varSymbols[2]
 
-word = checkerboard( n, n1 , n2)
+    checkerboard( numSize, symbol1 , symbol2)
  
-print(word)
 
-s = []
-for x in word:
-    s.append(x)
+if __name__ == "__main__":
+    main()
     
-for i in range(len(s)):
-    s[i],s[i-1,-1] = s[i-1,-1],s[i]
-    print(s)
