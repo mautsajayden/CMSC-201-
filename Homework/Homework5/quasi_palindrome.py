@@ -10,32 +10,46 @@
 
 def quasi_palindrome(word, errors):
     
-    arr = []
+    varWord = []
     reversedWord = ""
-    misMatcheLetters = 0
+    wrongLetters = 0
     
+    #puts the word into a list 
     for i in word:
-        arr.append(i)
+        varWord.append(i)
     
-    for i in range(len(arr)//2):
-        arr[i], arr[len(arr)-i-1] = arr[len(arr)-i-1], arr[i]
+    #reverse the word 
+    for i in range(len(varWord)//2):
+        varWord[i], varWord[len(varWord)-i-1] = varWord[len(varWord)-i-1], varWord[i]
     
-    for j in arr:
+    #concanates the reversed word from the list 
+    for j in varWord:
         reversedWord += j
     
+    #counts the number of erros 
     for i in range(len(word)):
         if word[i] != reversedWord[i]:
-            misMatcheLetters += 1
+            wrongLetters += 1
     
-    misMatcheLetters //= 2
+    #un accounts for the double erros 
+    wrongLetters //= 2
     
-    return misMatcheLetters <= errors
+    #returns true or false 
+    return wrongLetters <= errors
 
+def main():
+    userWord = " "
+    numErrors = 0
 
-userWord = input("What word do you want to check? ")
-numErrors = int(input("How many errors do you want to allow? "))
+    while (userWord != "quit"):
+        #user input 
+        userWord = input("What word do you want to check? ").lower()
+        numErrors = int(input("How many errors do you want to allow? "))
 
-if quasi_palindrome(userWord, numErrors):
-    print(f"It was a {numErrors}-quasi-palindrome!")
-else:
-    print(f"It was not a {numErrors}-quasi-palindrome!")
+        if quasi_palindrome(userWord, numErrors):
+            print(f"It was a {numErrors}-quasi-palindrome!")
+        else:
+            print(f"It was not a {numErrors}-quasi-palindrome!")
+
+if __name__ == "__main__":
+    main()
