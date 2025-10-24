@@ -7,6 +7,7 @@
     Description : lock and key
     """
 
+PERFECT_VALUE = 6
 
 def lock_and_key (key_cuts, lock_pinning,minimum):
      
