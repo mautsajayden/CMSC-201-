@@ -83,141 +83,13 @@ def roll_dice():
 File: game_logic.py
 Author: Jayden Mautsa
 Date: October 24, 2025
-Lab Section: <YOUR LAB SECTION>
-Email: mautsajayden11@gmail.com
+Email: jmautsa1@umbc.edu
 Description: This program runs a dice-based instruction game.
-It handles commands like add, sub, mul, nop, jmp, and hlt to modify
-the player's position and score on a generated game board.
 """
 
 # -------------------------------------------------------------
 # Function Definitions
 # -------------------------------------------------------------
-
-
-def instructions(message, position, score, roll, size_num):
-    """
-    Handles the game's instruction commands and updates
-    the position and score based on the message.
-
-    :param message: str, the instruction (e.g., "add 5", "jmp 3")
-    :param position: int, current player position
-    :param score: int, current player score
-    :param roll: int, last dice roll
-    :param size_num: int, the size of the game board
-    :return: tuple (position, score, roll, finished)
-    """
-    if "add" in message:
-        score += extract_value(message)
-        roll = control_position()
-        position += roll
-
-    elif "sub" in message:
-        score -= extract_value(message)
-        roll = control_position()
-        position += roll
-
-    elif "mul" in message:
-        score *= extract_value(message)
-        roll = control_position()
-        position += roll
-
-    elif "nop" in message:
-        roll = control_position()
-        position += roll
-
-    elif "jmp" in message:
-        roll = control_position()
-        jump_to = extract_value(message)
-
-        # Move directly to target if within bounds, otherwise roll forward
-        if jump_to < size_num:
-            position = jump_to
-        else:
-            position += roll
-
-    elif "hlt" in message:
-        roll = control_position()
-        print(f"Final Pos: {position} Final Score: {score}, Instruction {message}")
-        return position, score, roll, True
-
-    return position, score, roll, False
-
-
-def control_position():
-    """
-    Rolls the dice to determine player movement.
-    :return: int, the result of a dice roll
-    """
-    return roll_dice()
-
-
-def extract_value(command):
-    """
-    Extracts the integer value from a command string like "add 5".
-    :param command: str, a command containing a number
-    :return: int, the extracted number
-    """
-    parts = command.split()
-    if len(parts) == 2:
-        return int(parts[1])
-    return 0
-
-
-def nop_comms():
-    """
-    Executes a no-operation command by rolling the dice.
-    :return: int, the result of a dice roll
-    """
-    return roll_dice()
-
-
-def jump_comm():
-    """
-    Placeholder for jump command compatibility.
-    :return: int, always returns 0
-    """
-    return 0
-
-
-def display_grid(length_of_map):
-    """
-    Displays the game grid on the console.
-    :param length_of_map: int, the length of the grid
-    :return: None
-    """
-    print(make_grid(length_of_map))
-
-
-def play_game(game_map, size_num):
-    """
-    Runs the main game loop until the player halts or finishes the map.
-
-    :param game_map: list of str, the sequence of instructions
-    :param size_num: int, total size of the game board
-    :return: None
-    """
-    position = 0
-    score = 0
-    roll = 0
-    finished = False
-
-    # Main game loop
-    while not finished and position < len(game_map):
-        message = game_map[position]
-        position, score, roll, finished = instructions(
-            message, position, score, roll, size_num
-        )
-        print("Pos:", position, "Score:", score, ", instruction", message, "Rolled:", roll)
-
-    # Prevent index errors if position goes off the map
-    if position >= len(game_map):
-        position = len(game_map) - 1
-
-    # Game ends naturally (no halt instruction)
-    if not finished:
-        print(f"Final Pos: {position} Final Score: {score}, Instruction {game_map[position]}")
-
 
 def ask_user():
     """
@@ -236,12 +108,114 @@ def ask_user():
 
     return seed, size
 
+def instructions(message, position, score, roll, size_num):
+    """
+    Handles the game's instruction commands and updates
+    the position and score based on the message.
 
-# -------------------------------------------------------------
-# Main Execution
-# -------------------------------------------------------------
+    :param message: str, the instruction (e.g., "add 5", "jmp 3")
+    :param position: int, current player position
+    :param score: int, current player score
+    :param roll: int, last dice roll
+    :param size_num: int, the size of the game board
+    :return: tuple (position, score, roll, finished)
+    """
+    if "add" in message:
+        score += value(message)
+        roll = roll_dice()
+        position += roll
+
+    elif "sub" in message:
+        score -= value(message)
+        roll = roll_dice()
+        position += roll
+
+    elif "mul" in message:
+        score *= value(message)
+        roll = roll_dice()
+        position += roll
+
+    elif "nop" in message:
+        roll = roll_dice()
+        position += roll
+
+    elif "jmp" in message:
+        roll = roll_dice()
+        jump_to = value(message)
+
+        # Move directly to target if within bounds, otherwise roll forward
+        if jump_to < size_num:
+            position = jump_to
+        else:
+            position += roll
+
+    elif "hlt" in message:
+        roll = roll_dice()
+        print(f"Final Pos: {position} Final Score: {score}, Instruction {message}")
+        return position, score, roll, True
+
+    return position, score, roll, False
+
+def value(command):
+    """
+    Extracts the integer value from a command string like "add 5".
+    :param command: str, a command containing a number
+    :return: int, the extracted number
+    """
+    parts = command.split()
+    if len(parts) == 2:
+        return int(parts[1])
+    return 0
+
+def display_grid(the_grid):
+    """
+    Displays the game grid on the console.
+    :param length_of_map: int, the length of the grid
+    :return: None
+    """
+    # Display grid
+    for row in the_grid:
+        print(''.join(row))
+
+
+def play_game(game_map, size_num):
+    """
+    Runs the main game loop until the player halts or finishes the map.
+
+    :param game_map: list of str, the sequence of instructions
+    :param size_num: int, total size of the game board
+    :return: None
+    """
+    position = 0
+    score = 0
+    roll = 0
+    isHALT = False
+
+    #game loop 
+    while not isHALT and position < len(game_map):
+        
+        message = game_map[position]
+        
+        position, score, roll, isHALT = instructions(message, position, score, roll, size_num)
+        
+        print("Pos:", position, "Score:", score, ", instruction", message, "Rolled:", roll)
+
+    # return back when the position is greater than map size
+    if position >= len(game_map):
+        position = len(game_map) - 1
+
+    # when position is on halt the game stops 
+    if not isHALT:
+        print(f"Final Pos: {position} Final Score: {score}, Instruction {game_map[position]}")
+
+
+
+
 if __name__ == "__main__":
+    
     seed_num, size_num = ask_user()
+
+    message = generate_random_map(size_num, seed_num)
 
     # Generate game grid and map
     the_grid = make_grid(size_num)
@@ -251,9 +225,7 @@ if __name__ == "__main__":
     for index in range(size_num):
         fill_grid_square(the_grid, size_num, index, message[index])
 
-    # Display grid
-    for row in the_grid:
-        print(''.join(row))
+    display_grid(the_grid)
 
     # Start the game
     play_game(message, size_num)
