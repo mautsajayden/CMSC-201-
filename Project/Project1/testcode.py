@@ -1,13 +1,13 @@
-def value(x):
-    n = 0
-    val = 0
-    for i in x.split():
-        n += 1
-        if n == 2:
-            val = int(i)
-    return val
 
-print("hello")
-print(value("mul 65"))
+command = "mus 16"
+
+parts = command.split()
+
+print(parts)
+s = int(parts[1])
+print(s)
+print(s+2)
+
+
 
 
