@@ -162,9 +162,6 @@ def instructions(message, position, score, roll, map_size):
         print(f"Final Pos: {position} Final Score: {score}, Instruction {message}")
         return position, score, roll, True
 
-    # Normal move (wrap around)
-    
-
     return position, score, roll, False
 
 
